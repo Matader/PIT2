@@ -1,0 +1,60 @@
+erDiagram
+    CLIENTE {
+        int id PK
+        String nome
+        String email
+        String senha
+    }
+    
+    PRODUTO {
+        int id PK
+        String nome
+        String descricao
+        double preco
+    }
+    
+    CARRINHO {
+        int id PK
+        int cliente_id FK
+    }
+    
+    PEDIDO {
+        int id PK
+        Date data
+        double total
+        String status
+        String metodoRetirada
+        int cliente_id FK
+    }
+    
+    PEDIDOITEM {
+        int id PK
+        int quantidade
+        double preco
+        int pedido_id FK
+        int produto_id FK
+    }
+    
+    PAGAMENTO {
+        int id PK
+        String metodo
+        double valor
+        Date data
+        int pedido_id FK
+    }
+    
+    ADMINISTRADOR {
+        int id PK
+        String nome
+        String email
+        String senha
+    }
+    
+    CLIENTE ||--o| CARRINHO : "possui"
+    CLIENTE ||--o{ PEDIDO : "realiza"
+    CARRINHO }o--o{ PRODUTO : "inclui"
+    PEDIDO ||--o{ PEDIDOITEM : "contém"
+    PEDIDOITEM ||--|| PRODUTO : "refere-se a"
+    PEDIDO ||--|| PAGAMENTO : "processa"
+    ADMINISTRADOR ||--o{ PRODUTO : "gerencia"
+    ADMINISTRADOR ||--o{ PEDIDO : "gerencia"
