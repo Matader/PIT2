@@ -1,0 +1,80 @@
+classDiagram
+    class Cliente {
+        +int id
+        +String nome
+        +String email
+        +String senha
+        +registrar(): void
+        +login(): void
+        +navegarProdutos(): void
+        +pesquisarProdutos(): void
+        +adicionarAoCarrinho(produto: Produto): void
+        +visualizarCarrinho(): void
+        +realizarPedido(): Pedido
+    }
+
+    class Produto {
+        +int id
+        +String nome
+        +String descricao
+        +double preco
+        +getDetalhes(): String
+    }
+
+    class Carrinho {
+        +int id
+        +Map~Produto, int~ itens
+        +addItem(produto: Produto, quantidade: int): void
+        +removeItem(produto: Produto): void
+        +viewCart(): String
+        +checkout(): Pedido
+    }
+
+    class Pedido {
+        +int id
+        +Date data
+        +double total
+        +String status
+        +Cliente cliente
+        +List~PedidoItem~ itens
+        +String metodoRetirada
+        +realizarPagamento(): Pagamento
+        +atualizarStatus(novoStatus: String): void
+    }
+
+    class PedidoItem {
+        +int id
+        +Produto produto
+        +int quantidade
+        +double preco
+        +calcularSubtotal(): double
+    }
+
+    class Pagamento {
+        +int id
+        +String metodo
+        +double valor
+        +Date data
+        +realizarPagamento(): Boolean
+        +confirmarPagamento(): Boolean
+    }
+
+    class Administrador {
+        +int id
+        +String nome
+        +String email
+        +String senha
+        +gerenciarPedidos(): void
+        +gerenciarProdutos(): void
+   
+    }
+
+    Cliente "1" --> "1" Carrinho : possui
+    Cliente "1" --> "*" Pedido : realiza
+    Pedido "1" --> "*" PedidoItem : contém
+    PedidoItem "1" --> "1" Produto : refere-se
+    Pedido "1" --> "1" Pagamento : processa
+    Carrinho "1" --> "*" Produto : inclui
+    Administrador "1" --> "*" Produto : gerencia
+    Administrador "1" --> "*" Pedido : gerencia
+ 
